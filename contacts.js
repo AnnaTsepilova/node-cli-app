@@ -43,11 +43,11 @@ async function addContact(name, email, phone) {
   try {
     const contactsList = await readContacts();
     const contactNew = { id: uuidv4(), name, email, phone };
-    const newContactsList = JSON.stringify([contactNew, ...contactsList]);
+    const newContactsList = JSON.stringify([...contactsList, contactNew], null, '\t');
 
-    await fs.writeFile(contactsPath, JSON.stringify(newContactsList));
+    await fs.writeFile(contactsPath, newContactsList);
 
-    console.table(newContactsList);
+    return newContactsList;
   } catch (error) {
     console.log(error.message);
   }
